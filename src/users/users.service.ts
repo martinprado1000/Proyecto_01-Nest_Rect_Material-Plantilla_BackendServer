@@ -222,19 +222,32 @@ export class UsersService {
   }
 
   // -----------USER ISACTIVE FALSE-------------------------------------------------------------------------------
-  async userIsActiveFalse(
+  async userActivate(
     id: string,
     activeUser: CreateUserDto,
+    activate: boolean,
   ): Promise<ResponseUserDto> {
     await this.canEdit(id, activeUser);
 
-    const userUpdated = await this.update(id, { isActive: false }, activeUser);
-
-    this.logger.http(
-      UsersService.name,
-      `Usuario ${activeUser._id} paso a inactivo al usuario ${id}`,
-      `DELETE/${id}`,
+    const userUpdated = await this.update(
+      id,
+      { isActive: activate },
+      activeUser,
     );
+
+    if (activate === false) {
+      this.logger.http(
+        UsersService.name,
+        `Usuario ${activeUser._id} paso a inactivo al usuario ${id}`,
+        `DELETE/${id}`,
+      );
+    } else {
+      this.logger.http(
+        UsersService.name,
+        `Usuario ${activeUser._id} paso a activo al usuario ${id}`,
+        `DELETE/${id}`,
+      );
+    }
 
     return userUpdated;
   }
@@ -318,7 +331,8 @@ export class UsersService {
     // console.log(roleToEdit);
 
     let equalRoles = false;
-    if ( // Compara roleToEdit y userActive?.roles
+    if (
+      // Compara roleToEdit y userActive?.roles
       (typeof roleToEdit === 'string' &&
         userActive?.roles?.length === 1 &&
         userActive.roles[0] === roleToEdit) ||
@@ -327,7 +341,7 @@ export class UsersService {
         roleToEdit.length === userActive.roles.length &&
         roleToEdit.every((r) => userActive?.roles?.includes(r)))
     ) {
-      equalRoles = true
+      equalRoles = true;
     }
 
     const userToEdit = await this.findOneResponse(id);
@@ -365,10 +379,7 @@ export class UsersService {
       return;
     }
 
-    if (
-      userActive?._id?.toString() === id &&
-      equalRoles
-    ) {
+    if (userActive?._id?.toString() === id && equalRoles) {
       return;
     } // El propio usuario se puede editar el mismo pero no modificar el rol
 
