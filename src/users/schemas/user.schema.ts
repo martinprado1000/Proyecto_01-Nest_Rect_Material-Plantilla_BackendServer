@@ -7,7 +7,6 @@ import { ApiProperty } from '@nestjs/swagger';
   timestamps: true,
 })
 export class User extends Document {
-  
   @ApiProperty({
     description: 'User name',
     example: 'Richard',
@@ -75,7 +74,7 @@ export class User extends Document {
     required: true,
     trim: true,
     default: Role.USER,
-    uppercase: true
+    uppercase: true,
   })
   roles: Role[];
 
@@ -90,6 +89,7 @@ export class User extends Document {
     default: true,
   })
   isActive: boolean;
+
 }
 
-export const UserSchema = SchemaFactory.createForClass(User); 
+export const UserSchema = SchemaFactory.createForClass(User);

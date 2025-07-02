@@ -9,19 +9,18 @@ import {
   Matches,
   IsBoolean,
   IsMongoId,
-  MaxLength
+  MaxLength,
 } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { Types } from 'mongoose';
 import { Role } from 'src/users/enums/role.enums';
 
 export class CreateUserDto {
-
   @ApiProperty({
     description: 'Mongo Id (unique)',
     type: 'string',
     nullable: true,
-    example: "67a1a6c23504ec3e184cc14a",
+    example: '67a1a6c23504ec3e184cc14a',
   })
   @IsOptional()
   @IsMongoId()
@@ -36,7 +35,7 @@ export class CreateUserDto {
     minLength: 2,
     maxLength: 50,
     nullable: false,
-    example: 'Richard'
+    example: 'Richard',
   })
   @IsString()
   @IsNotEmpty()
@@ -52,7 +51,7 @@ export class CreateUserDto {
     minLength: 2,
     maxLength: 50,
     nullable: false,
-    example: 'Kendy'
+    example: 'Kendy',
   })
   @IsString()
   @IsNotEmpty()
@@ -67,7 +66,7 @@ export class CreateUserDto {
     type: 'string',
     nullable: false,
     maxLength: 100,
-    example: 'richard@gmail.com'
+    example: 'richard@gmail.com',
   })
   @IsEmail()
   @IsNotEmpty()
@@ -79,7 +78,7 @@ export class CreateUserDto {
     description: 'User password',
     type: 'string',
     nullable: false,
-    example: 'Test123##'
+    example: 'Test123##',
   })
   @IsString()
   @IsNotEmpty({ message: 'La contraseña es obligatoria' })
@@ -96,7 +95,7 @@ export class CreateUserDto {
     description: 'User confirm password',
     type: 'string',
     nullable: false,
-    example: 'Test123##'
+    example: 'Test123##',
   })
   @IsString()
   @IsNotEmpty({ message: 'La contraseña es obligatoria' })
@@ -112,7 +111,7 @@ export class CreateUserDto {
     type: 'array',
     enum: Role,
     nullable: true,
-    example: 'USER'
+    example: 'USER',
   })
   @IsOptional()
   @IsEnum(Role, { each: true })
@@ -133,11 +132,12 @@ export class CreateUserDto {
     description: 'User is active?',
     type: 'boolean',
     nullable: true,
-    example: true
+    example: true,
   })
   @IsOptional()
   @IsBoolean()
   isActive?: boolean;
+
 }
 
 function capitalize(value: string): string {

@@ -104,34 +104,4 @@ export class UsersController {
     return await this.usersService.delete(id, user);
   }
 
-  @Delete('usersInactive/:id')
-  @ApiResponse({ status: 204, description: 'User was deleted'})
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  @ApiResponse({ status: 403, description: 'Forbidden, token related' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(ValidRoles.SUPERADMIN,ValidRoles.ADMIN)
-  @HttpCode(204)
-  async userIsActiveFalse(
-    @Param('id', idMongoPipe) id: string, 
-    @GetUser() user: CreateUserDto
-  ) {
-    return await this.usersService.userActivate(id, user, false);
-  }
-
-  @Delete('usersActive/:id')
-  @ApiResponse({ status: 204, description: 'User was deleted'})
-  @ApiResponse({ status: 400, description: 'Bad request' })
-  @ApiResponse({ status: 404, description: 'Not Found' })
-  @ApiResponse({ status: 403, description: 'Forbidden, token related' })
-  @ApiResponse({ status: 401, description: 'Unauthorized' })
-  @Auth(ValidRoles.SUPERADMIN,ValidRoles.ADMIN)
-  @HttpCode(204)
-  async userActiveTrue(
-    @Param('id', idMongoPipe) id: string, 
-    @GetUser() user: CreateUserDto
-  ) {
-    return await this.usersService.userActivate(id, user, true);
-  }
-
 }

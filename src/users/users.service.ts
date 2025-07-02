@@ -65,6 +65,7 @@ export class UsersService {
     paginationDto: PaginationDto,
   ): Promise<ResponseUserDto[]> {
     const users = await this.findAll(paginationDto);
+    
     return plainToInstance(
       ResponseUserDto,
       users.map((user) => user.toObject()),
@@ -74,7 +75,7 @@ export class UsersService {
     );
   }
 
-  // -----------FIND ALL RESPONSE-------------------------------------------------------------
+  // -----------FIND ALL USERS ACTIVE RESPONSE-------------------------------------------------------------
   async findAllActiveUsersResponse(
     paginationDto: PaginationDto,
   ): Promise<ResponseUserDto[]> {
@@ -331,8 +332,7 @@ export class UsersService {
     // console.log(roleToEdit);
 
     let equalRoles = false;
-    if (
-      // Compara roleToEdit y userActive?.roles
+    if ( // Compara roleToEdit y userActive?.roles
       (typeof roleToEdit === 'string' &&
         userActive?.roles?.length === 1 &&
         userActive.roles[0] === roleToEdit) ||
@@ -345,13 +345,6 @@ export class UsersService {
     }
 
     const userToEdit = await this.findOneResponse(id);
-
-    // if (userActive?._id?.toString() === id) {
-    //   console.log('id iguales');
-    // }
-    // if (equalRoles) {
-    //   console.log('rol iguales');
-    // }
 
     if (userActive?.roles?.includes(Role.SUPERADMIN)) {
       return; // Si es superadmin puede editar cualquier usuario.
