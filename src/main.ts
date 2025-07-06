@@ -14,7 +14,7 @@ async function bootstrap() {
   app.enableCors({
     //origin: ['http://localhost:5173','http://localhost:5174'],
     methods: 'GET,PUT,PATCH,POST,DELETE', //HEAD
-    credentials: true,
+    credentials: true, // Permite las cookies
   });
 
   app.useGlobalPipes(new ValidationPipe({
